@@ -2,13 +2,14 @@
     <div>
        <homeHead/>
        <swiper :swiperList="swiperList"/>
-       text
+       <icon/>
     </div>
 </template>
 
 <script>
 import homeHead from './components/Header.vue'
 import swiper from './components/swiper.vue'
+import icon from './components/home-icon.vue'
     export default {
         data(){
             return{
@@ -22,7 +23,8 @@ import swiper from './components/swiper.vue'
         },
         components:{
             homeHead,
-            swiper
+            swiper,
+            icon
         }
     }
 </script>
