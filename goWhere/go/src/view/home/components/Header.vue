@@ -5,10 +5,13 @@
         </div>
         <div class="input">
             <span class="iconfont">&#xe632;</span> 输入城市景点游玩主题</div>
-        <div class="headerRight ">
-            {{city}}
-             <span class="iconfont right-icon">&#xe64a;</span>
-        </div>
+            <router-link to="/city">
+                <div class="headerRight ">
+                    {{city}}
+                    <span class="iconfont right-icon">&#xe64a;</span>
+                </div>
+            </router-link>
+      
     </div>
 </template>
 
@@ -45,6 +48,7 @@
  .headerRight
       width:1.24rem;
       float:right
+      color #fff
       .right-icon
         font-size .24rem
 </style>
