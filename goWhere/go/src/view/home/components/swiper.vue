@@ -3,7 +3,7 @@
          <swiper :options="swiperOption" ref="mySwiper" >
             <!-- slides -->
             <swiper-slide v-for="(item,index) in swiperList" :key=index>
-                <img class="swiper-img" :src="item"/>
+                <img class="swiper-img" :src="item.imgUrl"/>
             </swiper-slide>
            
            
@@ -18,6 +18,9 @@
 <script>
     export default {
         props:['swiperList'],
+        mounted(){
+           
+        },
         data(){
             return{
                swiperOption:{

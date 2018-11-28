@@ -1,8 +1,8 @@
 <template>
     <div id="app">
-       <homeHead/>
-       <swiper :swiperList="swiperList"/>
-       <icon/>
+       <homeHead :city="homeInfo.city"/>
+       <swiper :swiperList="homeInfo.swiperList"/>
+       <icon  :iconList="homeInfo.iconList"/>
        <div class="split"></div>
        <recommend/>
        <Love/>
@@ -17,15 +17,12 @@ import icon from './components/home-icon.vue'
 import recommend from './components/recommend.vue'
 import Love from './components/love.vue'
 import weekEnd from './components/weekend.vue'
+import axios from 'axios'
     export default {
         data(){
             return{
-               header:"",
-               swiperList:[
-                   "http://img1.qunarzz.com/piao/fusion/1811/7c/8e5c4ab8ee8b7402.jpg_750x200_dd7a38dd.jpg",
-                   "http://img1.qunarzz.com/piao/fusion/1811/d4/9f89c513c1f96402.jpg_750x200_77a1242f.jpg",
-                   "http://img1.qunarzz.com/piao/fusion/1811/4d/6706bf772c05ce02.jpg_750x200_773e75f0.jpg"
-               ]
+               homeInfo:{}
+              
             }
         },
         components:{
@@ -35,6 +32,18 @@ import weekEnd from './components/weekend.vue'
             recommend,
             Love,
             weekEnd
+        },
+        mounted(){
+            this.getHomeInfo()
+        },
+        methods:{
+            getHomeInfo(){
+                axios.get('/api/index.json').then((data)=>{
+                  
+                    if(data.data.ret=="true") {this.homeInfo=data.data.data}
+                      console.log(this.homeInfo)
+                }) 
+            }
         }
     }
 </script>

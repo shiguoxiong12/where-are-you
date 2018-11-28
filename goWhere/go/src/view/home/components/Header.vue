@@ -6,7 +6,7 @@
         <div class="input">
             <span class="iconfont">&#xe632;</span> 输入城市景点游玩主题</div>
         <div class="headerRight ">
-             城市
+            {{city}}
              <span class="iconfont right-icon">&#xe64a;</span>
         </div>
     </div>
@@ -14,7 +14,7 @@
 
 <script>
     export default {
-        
+        props:["city"]
     }
 </script>
 
