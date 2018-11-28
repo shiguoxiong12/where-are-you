@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  a2222
+  哈哈哈
     <router-view/>
   </div>
 </template>
