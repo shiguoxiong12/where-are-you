@@ -1,8 +1,12 @@
 <template>
-    <div>
+    <div id="app">
        <homeHead/>
        <swiper :swiperList="swiperList"/>
        <icon/>
+       <div class="split"></div>
+       <recommend/>
+       <Love/>
+       <weekEnd/>
     </div>
 </template>
 
@@ -10,6 +14,9 @@
 import homeHead from './components/Header.vue'
 import swiper from './components/swiper.vue'
 import icon from './components/home-icon.vue'
+import recommend from './components/recommend.vue'
+import Love from './components/love.vue'
+import weekEnd from './components/weekend.vue'
     export default {
         data(){
             return{
@@ -24,11 +31,20 @@ import icon from './components/home-icon.vue'
         components:{
             homeHead,
             swiper,
-            icon
+            icon,
+            recommend,
+            Love,
+            weekEnd
         }
     }
 </script>
 
 <style scoped>
-
+#app{
+    font-size: 16px;
+}
+.split{
+    height:10px;
+    background-color:#f5f5f5;
+}
 </style>
