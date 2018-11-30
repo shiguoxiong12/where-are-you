@@ -16,6 +16,11 @@ import list from './components/city-list.vue'
     export default {
         components:{
             list
+        },
+        methods:{
+             listenChange(e){
+              console.log(e)
+           },
         }
     }
 </script>

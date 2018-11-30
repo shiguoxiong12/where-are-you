@@ -61,7 +61,7 @@
              </div>
             
          </div>
-          <div class="area" v-for="(parent,index) in city" :key="index">
+          <div class="area" v-for="(parent,index) in city" :key="index" :ref="parent.name">
              <div class="title border-topbottom">{{parent.name}}</div>
              <div class="cityList" v-for="(item,index) in parent.val" :key="index">
                  <div class="item">{{item.name}}</div>
@@ -70,9 +70,18 @@
           </div>
        
           </div>
-            <div class="area cityArr">
-              <ul>
-                  <li v-for="(item,index) in cityArr" :key="index" :class="{active:index==current}">{{item}}</li>
+            <div class="area cityArr" ref="cityArr">
+              <ul ref="ul">
+                  <li v-for="(item,index) in cityArr"
+                   :key="index"
+                   :class="{active:index==current}" 
+                   :index="index"
+                   :ref="item+index" 
+                   @click="handler1($event,index)" 
+                   @touchstart="start"
+                   @touchmove="move"
+                   @touchend="end"
+                   >{{item}}</li>
               </ul>
           </div>
     </div>
@@ -86,7 +95,9 @@
         data(){
             return{
                 city:[],
-                current:0 
+                current:0 ,
+                scroll:{},
+                startMove:false
             }
         },
         created(){
@@ -100,29 +111,43 @@
         mounted(){
             setTimeout(()=>{
                this.init()
-            },1000)
-           
+            },1000)  
         },
         methods:{
+           handler1(e,index){
+                  this.current=index
+                  const curr=e.target.innerText;
+                  const el=this.$refs[curr][0]
+                  this.scroll.scrollToElement(el)     
+           },
+           start(){
+                  this.startMove=true
+           },
+           move(e){
+              if(this.startMove){
+                   const Y=this.$refs.cityArr.offsetTop;
+                   const moveY=e.touches[0].clientY-Y-68;
+                   const index=Math.floor(moveY/22)
+                   this.current=index
+                   const m=this.cityArr[index]
+                   const el=this.$refs[m][0]
+                   this.scroll.scrollToElement(el)
+
+                } 
+           },
+           end(){
+               this.start=false
+           },
            init(){
                let wrapper = this.$refs.wraper
-               let scroll = new BetterScroll(wrapper,{
+                this.scroll = new BetterScroll(wrapper,{
+                   click:true,
+                   tap:true,
                    probeType:2
                })
-               scroll.on('scroll',(e)=>{
-                
-                   let y=Math.abs(e.y);
-                   for(let i=0;i<this.divHeight.length;i++){
-                        if(this.divHeight[i]<y&&y<this.divHeight[i+1]){
-                            if(i=1){
-                              this.current=0
-                            }else{
-                               this.current=i
-                            }
-                           
-                       }
-                   }
-                   
+               this.scroll.on('scroll',(e)=>{
+                   let y=e.y; 
+                   console.log(y)
                })
            }
         },
@@ -160,9 +185,9 @@
     font-size .26rem
     line-height .44rem
     color #666
-    position absolute
+    position relative
     left 0
-    top 1.58rem
+    top 0
     bottom 0
     right 0
     overflow hidden     
@@ -194,9 +219,9 @@
            width auto
            padding-left 0
           
-           position fixed
+           position absolute
            right .2rem
-           top 3rem
+           top 1rem
            z-index 9     
            ul 
                list-style none    
