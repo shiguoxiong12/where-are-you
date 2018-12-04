@@ -64,7 +64,10 @@
           <div class="area list" v-for="(parent,index) in city" :key="index" :ref="parent.name">
              <div class="title border-topbottom">{{parent.name}}</div>
              <div class="cityList" v-for="(item,index) in parent.val" :key="index">
-                 <div class="item">{{item.name}}</div>
+                 <router-link :to="`/?city=${item.name}`">
+                     <div class="item">{{item.name}}</div>
+                 </router-link>
+                
              </div>
           </div>
           </div>
@@ -75,8 +78,7 @@
                    :class="{active:index==current}" 
                    :index="index"
                    :ref="item+index" 
-                   @click="handler1($event,index)" 
-                   @touchstart="start"
+                   @touchstart="handler1($event,index)"
                    @touchmove="move"
                    @touchend="end"
                    >{{item}}</li>
@@ -117,7 +119,6 @@
                   let curent=this.divHeight[i]+40
                   let nextC=this.divHeight[i+1]-40
                   if(curent<Math.abs(newV)&&Math.abs(newV)<nextC){
-                      console.log(i)
                       this.current=i
                   }
               }
@@ -126,15 +127,14 @@
         },
         methods:{
            handler1(e,index){
-                  this.current=index
-                  const curr=e.target.innerText;
-                  const el=this.$refs[curr][0]
-                  this.scroll.scrollToElement(el)     
+                 this.startMove=true
+                 this.current=index
+                 const curr=e.target.innerText;
+                 const el=this.$refs[curr][0]
+                 this.scroll.scrollToElement(el)     
            },
            calculate(arr,index){
-               console.log(arr)
-              
-                let val=0
+              let val=0
                if(index==0){
                   val=arr[0]
                }else{
@@ -240,9 +240,15 @@
                  border-radius 4px   
          .cityList
             padding .1rem .6rem .1rem .1rem
+            color #fff
+            .router-link-active
+              color #666
+            a 
+               text-direction none
            .item
               height .6rem
               padding-left .1rem
+              color #666
               border-bottom 1px solid #ccc
      .cityArr
            width auto
